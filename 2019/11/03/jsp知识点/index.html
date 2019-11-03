@@ -1,0 +1,327 @@
+
+
+
+
+
+
+
+<!doctype html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="author" content="Dr.su">
+  
+  
+  
+  
+    <meta name="description" content="JSP 定义：        1)Java Server Page, Java EE 组件，本质上是 Servlet。        2)运行在 Web Container.接收 Http Request,生成 Http Response(默认协议是 Http 请求和响应)        3)JSP 使得我们能够分离页面的静态 HTML 和动态部分——我们需要的技术。        4)使页...">
+  
+  <title>jsp知识点 [ S_boke ]</title>
+  
+  
+    <link rel="shortcut icon" href="/hollow.ico">
+  
+  
+  <link rel="stylesheet" href="/css/random.css">
+<link rel="stylesheet" href="/css/vegas.min.css">
+<link rel="stylesheet" href="/css/highlight-railscasts.css">
+<link rel="stylesheet" href="/css/jquery.fancybox.css">
+<link rel="stylesheet" href="/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/jquery.fancybox-thumbs.css">
+<link rel="stylesheet" href="/css/plyr.css">
+  
+</head>
+
+<body>
+<div class="side-navigate hide-area">
+  
+  
+    <div class="item next">
+      <a href="/2019/10/31/mysql知识点/">
+        <div class="item-icon"></div>
+      </a>
+      <div class="item-title">
+        mysql知识点
+      </div>
+    </div>
+  
+</div>
+<div id="outer-container" class="hide-area">
+<div id="container">
+  <div id="menu-outer" class="slide-down">
+    <div id="menu-inner">
+      <div id="brand">
+        
+        <a onclick="openUserCard()">
+          <img id="avatar" src="https://avatars3.githubusercontent.com/u/13285397?s=460&v=4">
+          <div id="homelink">S_boke</div>
+        </a>
+      </div>
+      <div id="menu-list">
+        <ul>
+        
+        
+          
+            <li>
+          
+            <a href="/index.html">Home</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/archives">Archives</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/tags">Tags</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/categories">Categories</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/about">About</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="https://github.com/Baileyswu">Github</a>
+            
+          </li>
+        
+        </ul>
+      </div>
+      <div id="show-menu">
+        <button>Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="content-outer">
+    <div id="content-inner">
+      
+      
+  
+
+  <article id="post">
+    <h1>jsp知识点</h1>
+    <p class="page-title-sub">
+      <span id="post-title-date">撰写于 2019-11-03</span>
+      
+        <span id="post-title-updated">修改于 2019-11-03</span>
+      
+      
+      
+    </p>
+    
+    <p>JSP 定义：<br>        1)Java Server Page, Java EE 组件，本质上是 Servlet。<br>        2)运行在 Web Container.接收 Http Request,生成 Http Response(默认协议是 Http 请求和响应)<br>        3)JSP 使得我们能够分离页面的静态 HTML 和动态部分——我们需要的技术。<br>        4)使页面可以混和html代码、Java代码以及JSP标签；允许访问组件</p>
+<p>基本语法<br>一、JSP的声明(statement)<br>       用来定义在产生的类文件中的类的属性和方法(成员变量)。可声明类(即是内部类)。<br>       由于servlet是工作在多线程环境下，所以尽量不要在service方法体外声明成员变量。<br>       &lt;%!…..%&gt;  //声明时要加”!”，属于类成员，最先加载，可写于任何位置；不加则是脚本的局部变量，必须调用前写。<br>       如：  &lt;%!String hello=”Hello, World!”;%&gt;  //变量的声明<br>            &lt;%=hello%&gt;   //变量的调用<br>            &lt;%! private int counter=0;  public int count(){ return ++counter;} %&gt; //函数的声明<br>            </p><h1>&lt;%=count()%&gt;</h1> //函数的调用<br>       声明规则：<br>        1) JSP中声明的变量和方法对应于Servlet中的实例方法和实例变量。这些将被同时请求该页面的所有用户所共享;<br>        2) 在使用变量或方法前须先定义(不是说声明变量的位置在页面中要处于使用变量的前面，而是指变量不声明不能使用);<br>        3) 声明的变量或方法的作用域为当前页面或包含的页面;<br>        4) 语句间以分号分隔。<p></p>
+<p>二、JSP代码段(Scriptlet)<br>          &lt;% java代码 %&gt;<br>       是一段可以在处理请求时间执行的Java代码。可以产生输出，也可以是一些流程控制语句。<br>       在代码段中定义的变量为service方法中的局部变量。<br>       1._jspService()中的局部代码：<br>          &lt;%  System.out.println(“Hi,I like JSP.”); %&gt;   //在控制台打印出，网页上没显示<br>          &lt;%  out.println(“Hi,I like JSP.”); %&gt;          //打印在网页上<br>          &lt;%  Connection conn=DriverManager.getConnection();  Statement st=conn.createStatement();<br>            String sql=”select * from users”;               ResultSet rs=st.executeQuery(sql);<br>             //……<br>           %&gt;<br>        问：能否在JSP脚本里定义方法？<br>        答：不能！ //脚本相当于方法，不能在方法里定义方法<br>           &lt;%!public void helloworld(){}%&gt;  //可以声明方法<br>           &lt;% public void helloworld(){}%&gt;  //编译出错；脚本不能定义方法<br>       2.比较:<br>            &lt;%! int i=100;%&gt;     //成员变量<br>            &lt;%  int i=101;%&gt;     //_jspService()方法中的局部变量<br>            &lt;%=i%&gt;  //同一文件里，局部变量优先<br>       3.脚本小程序规则：<br>         1) 你使用的脚本语言决定了脚本小程序的规则;<br>         2) 语句间以分号分隔;<br>         3) 可以使用默认的对象、import进的类、declaration声明的方法和对象以及useBean tag中声明的对象。</p>
+<p>三、JSP表达式(expression)<br>           &lt;%=……%&gt;   // “=”号<br>       在JSP请求处理阶段计算他的值，表达式生成的代码是Service方法中的一个代码片断。<br>       JSP对于声明的处理：1、计算表达式的值<br>                   2、将值转换成String<br>                   3、用out.println发送标签；把数据输出至页面的当前位置<br>          &lt;%=”Hello,JSP world!”%&gt;     //out.println(“Hello,JSP world”);<br>          &lt;%=name%&gt;                   //&lt;%!String name=”GiGi”;%&gt; out.println(name);<br>          &lt;%=new java.util.Date()%&gt;   //out.println(new java.util.Date());<br>       表达式规则：<br>         1) 你使用的脚本语言决定了脚本小程序的规则;<br>         2) 执行的顺序为从左到右;<br>         3) 分号不能用于表达式。</p>
+<p>四、JSP指令(direction)<br>       指令用于从JSP发送信息到容器上。用来设置全局变量，声明类，要实现的方法和输出内容等。<br>       指令在JSP整个文件内有效。它为翻译阶段提供了全局信息。<br>           &lt;%@……%&gt;  // “@”符号<br>       指令包括：page、include、taglib<br>       1.page指令<br>            import、session、errorPage、isThreadSafe<br>         页面的语言、内容类型、字符集、页面编码<br>            &lt;%@page language=”java” contentType=”text/html; charset=gbk” pageEncoding=”gbk”%&gt;<br>            language：java唯一值，表示脚本中使用的编程语言<br>            contentType：设置了内容的类型和静态页面的编码 (告诉浏览器以什么编码显示)<br>            pageEncoding：页面本身的编码格式 (写页面时用的编码格式)<br>            上面的代码等价于servlet里： response.setContentType(“text/html; charset=gbk”);<br>        import：导入其他的包和类； 其中，JSP默认导入的包是java.lang.*<br>            &lt;%@page import=”java.util.Date”%&gt; //具体的包和类<br>            &lt;%@page import=”java.sql.*”%&gt;     //包下的所有类<br>            &lt;%@page import=”java.util.<em>, java.io.</em>, java.net.*”%&gt; //连写，逗号分隔<br>        Session：指示当前的jsp是否参与会话 (默认为true； 参与会话)<br>            通过指令使当前页面与session不可会话：    &lt;%@page session=”false”%&gt;<br>            session=”true”时，可用内建对象session直接访问会话，例如：<br>            &lt;%  session.setAttribute(“username”,”maxwell”);<br>                String name = (String)session.getAttribute(“username”); %&gt;<br>            &lt;%=name%&gt;<br>     errorPage：<br>            isErrorPage：Jsp页面中出现异常的处理方式<br>            对于有可能出现异常的页面：<br>                &lt;%@page errorPage=”error.jsp”%&gt; //异常时会跳转到处理异常的页面；这页面自己写<br>                在有可能异常的地方打印原因：  throw new Exception(“数据库连接出错”);<br>            对于处理异常的页面(error.jsp)里：<br>             &lt;%@page isErrorPage=”true”%&gt;，其中使用&lt;%=exception.getMessage() %&gt;把异常信息打印出来<br>         isThreadSafe——此属性已经不再使用(已废弃)<br>            当前Jsp页面是否线程安全    default—&gt;true<br>          &lt;%@page isThreadSafe=”true”%&gt;  //普通的Servlet,可以并发处理用户请求<br>          &lt;%@page isThreadSafe=”false”%&gt; //相当于Servlet实现了SingleThreadModel<br>   2.include指令<br>            把目标页面的内容包含到当前页面,产生页面叠加以后的输出效果 //相当于将两个页面合并；编译时就包含进来<br>            &lt;%@include file=”foot.jsp”%&gt; //可插入任意位置<br>   3.taglib指令<br>            留在JSTL里讲解。</p>
+<p>五、JSP中的注释<br>       1.java格式注释<br>          编译器会忽略掉此类注释中的内容(客户端的源码看不见)<br>          &lt;%– JSP注释；可多行 –%&gt;<br>          &lt;%// java 单行注释 %&gt;<br>          &lt;%/* java multi lines comments <em>/%&gt;<br>          &lt;%/**java 特有的注释</em>/%&gt;<br>   2.html风格注释<br>          编译器会执行此类注释中的代码(客户端的源码看得见)<br>          <!-- html风格注释 -->  等价于out.println(“<!-- html风格注释 -->“)<br>          这种注释方式不好的地方就是当页面注释信息太多的时候会增大服务器的负荷。<br>          还有注释信息需要在网络上传输，从而降低效率；内部程序员的测试数据一般不能写在这种注释中，以免泄露。</p>
+<p>六、动作(Action)<br>        &lt;jsp:actionName attributeName=attributeValue/&gt;<br>       JSP的动作包括：<br>        forward、include、useBean、setProperty、getProperty<br>     1.forward动作<br>         形式：&lt;jsp:forward page=”another.jsp”/&gt;<br>              等价于 Servlet中通过RequestDispatcher.forward();<br>         可以传参数<br>             &lt;jsp:forward  page=”another.jsp”&gt;<br>                &lt;jsp:param name=”name” value=”maxwell”/&gt;<br>                &lt;jsp:param name=”age” value=”20” /&gt;<br>             <br>   2.Include动作<br>         形式：&lt;jsp:include page=”another.jsp”/&gt;<br>              等价于 Servlet中通过RequestDispatcher.include();<br>          Include动作也可以传参数<br>              &lt;jsp:include  page=”b.jsp” flush=”true”&gt;<br>                &lt;jsp:param name=”name” value=”narci”/&gt;<br>              <br>          与&lt;%@include file=””%&gt;比较：<br>             include动作在运行期处理(include指令编译期)，jsp:include包含的是所包含URI的响应，而不是URI本身。<br>             这意味着：jsp:include 对所指出的 URI 进行解释，因而包含的是生成的响应。<br>             对于页面是静态内容，这没有太大的关系。但如果是动态内容，include动作可传参数。<br>          flush 属性<br>             flush 指示在读入包含内容之前是否清空任何现有的缓冲区。<br>         JSP 1.1 中需要 flush 属性，因此，如果代码中不用它，会得到一个错误。<br>             但是，在 JSP 1.2 中， flush 属性缺省为 false。<br>             建议：由于清空大多数时候不是一个重要的问题，因此，对于 JSP 1.1，将 flush 设置为 true；<br>                 而对于 JSP 1.2 及更高版本，将其设置为 false 或不设置(用默认值)。</p>
+<p>JSP的生命周期<br>    1) 每一个JSP都会对应有一个servlet生成<br>    2) 在 %tomcat%/work/Catalina/localhost/工程名/org/apache/jsp 目录下可找到对应生成的 Servlet 文件<br>    3) 一般而言，每一个JSP对应的servlet都有如下的生命周期方法：</p>
+
+  </article>
+  <div class="random-toc-area">
+  <button class="btn-hide-toc btn-hide-toc-show" style="display: none" onclick="TOCToggle()">显示目录</button>
+  <button class="btn-hide-toc btn-hide-toc-hide" onclick="TOCToggle()">隐藏目录</button>
+  <div class="random-toc">
+    <h2>目录</h2>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">&lt;%=count()%&gt;</span></a></li></ol>
+  </div>
+</div>
+
+  
+<nav id="pagination">
+  
+
+  
+
+  
+    <a href="/2019/10/31/mysql知识点/" class="next">下一篇 mysql知识点 &rarr;</a>
+  
+</nav>
+
+  <!-- JiaThis Button BEGIN -->
+
+<!-- JiaThis Button END -->
+
+
+      
+      
+    </div>
+  </div>
+
+  <div id="bottom-outer">
+    <div id="bottom-inner">
+      Site by Dr.su using
+      <a href="http://hexo.io">Hexo</a> & <a href="https://github.com/stiekel/hexo-theme-random">Random</a>
+      <br>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+<div id="user-card">
+  <div class="center-field">
+    <img class="avatar" src="https://avatars3.githubusercontent.com/u/13285397?s=460&v=4">
+    <p id="description"></p>
+    <ul class="social-icon">
+  
+  
+    <li>
+      <a href="https://github.com/Baileyswu">
+        
+          <i class="icon iconfont github">&#xe606;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="http://weibo.com/Danliwoo">
+        
+          <i class="icon iconfont weibo">&#xe602;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="mailto:wulidan0530@live.com">
+        
+          M
+        
+      </a>
+    </li>
+  
+</ul>
+  </div>
+</div>
+
+
+<div id="btn-view">Hide</div>
+
+<script>
+// is trigger analytics / tongji script
+var isIgnoreHost = false;
+
+if(window && window.location && window.location.host) {
+  isIgnoreHost = ["localhost","127.0.0.1"].some(function(address){
+    return 0 === window.location.host.indexOf(address);
+  });
+}
+
+var isTriggerAnalytics = !( true && isIgnoreHost );
+
+</script>
+
+
+
+
+  
+  
+    <script src="/js/jquery-2.2.3.min.js"></script>
+  
+    <script src="/js/vegas.min.js"></script>
+  
+    <script src="/js/random.js"></script>
+  
+    <script src="/js/highlight.pack.js"></script>
+  
+    <script src="/js/jquery.mousewheel.pack.js"></script>
+  
+    <script src="/js/jquery.fancybox.pack.js"></script>
+  
+    <script src="/js/jquery.fancybox-thumbs.js"></script>
+  
+    <script src="/js/plyr.js"></script>
+  
+
+<script>
+
+  // fancybox
+  var backgroundImages = [];
+  
+  $('#post').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox') || $(this).parent().hasClass('fancybox-thumb')) return;
+      var alt = this.alt || this.title;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'post' + i);
+    });
+  });
+  $(".fancybox").fancybox();
+
+var vegasConfig = {"preload­Image":true,"transition":["flash"],"timer":true,"delay":1500000,"shuffle":true,"count":12};
+var unsplashConfig = {"gravity":"center"};
+// is show background images
+var turnoffBackgroundImage = false;
+
+
+
+
+var backgroundColor = "34495E";
+
+$(".fancybox-thumb").fancybox({
+  prevEffect: 'none',
+  nextEffect: 'none',
+  helpers: {
+    title: {
+      type: 'outside'
+    },
+    thumbs: {
+      width: 50,
+      height: 50
+    }
+  }
+});
+
+// show video with plyr
+$(".video-container iframe").each(function(i){
+  var url = $(this).attr('src');
+  var id = url.split('/').pop();
+  var plyrContainer = document.createElement('div');
+  plyrContainer.className = 'plyr';
+  var plyrElement = document.createElement('div');
+  plyrElement.dataset.videoId = id;
+  switch(true) {
+    case url.search('youtube.com') >= 0:
+      plyrElement.dataset.type = 'youtube';
+      break;
+    case url.search('vimeo.com') >= 0:
+      plyrElement.dataset.type = 'vimeo';
+      break;
+    default:
+      return;
+  };
+  plyrContainer.appendChild(plyrElement);
+  $(this).parent().html(plyrContainer);
+});
+plyr.setup('.plyr', {iconUrl: '/css/sprite.svg'});
+</script>
+</body>
+</html>
+
