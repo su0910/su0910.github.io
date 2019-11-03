@@ -1,0 +1,376 @@
+
+
+
+
+
+
+
+<!doctype html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="author" content="Dr.su">
+  
+  
+  
+  
+    <meta name="description" content="第一部分    hexo的初级搭建还有部署到github page上，以及个人域名的绑定。
+Hexo搭建步骤    一.  安装Git    二.  安装Node.js    三.  安装Hexo    四.  GitHub创建个人仓库    五.  生成SSH添加到GitHub    六.  将hexo部署到GitHub    七.  设置个人域名    八.  发布文章
+
+安装Git: ...">
+  
+  <title>如何搭建hexo [ S_boke ]</title>
+  
+  
+    <link rel="shortcut icon" href="/hollow.ico">
+  
+  
+  <link rel="stylesheet" href="/css/random.css">
+<link rel="stylesheet" href="/css/vegas.min.css">
+<link rel="stylesheet" href="/css/highlight-railscasts.css">
+<link rel="stylesheet" href="/css/jquery.fancybox.css">
+<link rel="stylesheet" href="/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/jquery.fancybox-thumbs.css">
+<link rel="stylesheet" href="/css/plyr.css">
+  
+</head>
+
+<body>
+<div class="side-navigate hide-area">
+  
+  
+    <div class="item next">
+      <a href="/2019/11/03/jsp知识点/">
+        <div class="item-icon"></div>
+      </a>
+      <div class="item-title">
+        jsp知识点
+      </div>
+    </div>
+  
+</div>
+<div id="outer-container" class="hide-area">
+<div id="container">
+  <div id="menu-outer" class="slide-down">
+    <div id="menu-inner">
+      <div id="brand">
+        
+        <a onclick="openUserCard()">
+          <img id="avatar" src="https://avatars3.githubusercontent.com/u/13285397?s=460&v=4">
+          <div id="homelink">S_boke</div>
+        </a>
+      </div>
+      <div id="menu-list">
+        <ul>
+        
+        
+          
+            <li>
+          
+            <a href="/index.html">Home</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/archives">Archives</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/tags">Tags</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/categories">Categories</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/about">About</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="https://github.com/Baileyswu">Github</a>
+            
+          </li>
+        
+        </ul>
+      </div>
+      <div id="show-menu">
+        <button>Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="content-outer">
+    <div id="content-inner">
+      
+      
+  
+
+  <article id="post">
+    <h1>如何搭建hexo</h1>
+    <p class="page-title-sub">
+      <span id="post-title-date">撰写于 2019-11-03</span>
+      
+        <span id="post-title-updated">修改于 2019-11-03</span>
+      
+      
+      
+    </p>
+    
+    <p>第一部分<br>    hexo的初级搭建还有部署到github page上，以及个人域名的绑定。</p>
+<p>Hexo搭建步骤<br>    一.  安装Git<br>    二.  安装Node.js<br>    三.  安装Hexo<br>    四.  GitHub创建个人仓库<br>    五.  生成SSH添加到GitHub<br>    六.  将hexo部署到GitHub<br>    七.  设置个人域名<br>    八.  发布文章</p>
+<ol>
+<li>安装Git:<br> Git教程<br>windows：到git官网上下载,Download git,下载后会有一个Git Bash的命令行工具，以后就用这个工具来使用git。</li>
+</ol>
+<p>linux：对linux来说实在是太简单了，因为最早的git就是在linux上编写的，只需要一行代码<br>sudo apt-get install git<br>        安装好后，用git –version 来查看一下版本</p>
+<ol start="2">
+<li>安装nodejs：<br>  Hexo是基于nodeJS编写的，所以需要安装一下nodeJs和里面的npm工具。<br>  windows：nodejs选择LTS版本就行了。<br>  sudo apt-get install nodejs<br>  sudo apt-get install npm<br>  安装完后，打开命令行<br>  node -v<br>  npm -v<br>  检查一下有没有安装成功<br>  顺便说一下，windows在git安装完后，就可以直接使用git bash来敲命令行了，不用自带的cmd，cmd有点难用。</li>
+<li>安装hexo：<br>  前面git和nodejs安装好后，就可以安装hexo了，你可以先创建一个文件夹blog，然后cd到这个文件夹下（或者在这个文件夹下直接右键git bash        打开）。输入命令：  npm install -g hexo-cli<br>  依旧用hexo -v查看一下版本，至此就全部安装完了。<br>  接下来初始化一下hexo，输入命令： hexo  init  myblog   (其中myblog可以自己取什么名字都可以)<br>  然后输入命令： cd   myblog  进入myblog  文件夹<br>  新建完成后，指定文件夹目录下有：<pre><code>node_modules: 依赖包
+public：存放生成的页面
+scaffolds：生成文章的一些模板
+source：用来存放你的文章
+themes：主题
+** _config.yml: 博客的配置文件**</code></pre>  输入命令：hexo g<pre><code>hexo server    然后在浏览器输入localhost:4000就可以看到你生成的博客了，在使用ctrl+c可以把服务关掉</code></pre></li>
+<li>GitHub创建：<br>  首先，你先要有一个GitHub账户，去注册一个吧。<br>  注册完登录后，在GitHub.com中看到一个New repository，新建仓库，创建一个和你用户名相同的仓库，后面加.github.io，只有这样，将来要部            署到GitHub page的时候，才会被识别，也就是xxxx.github.io，其中xxx就是你注册GitHub的用户名。我这里是已经建过了。点createrepository</li>
+</ol>
+<ol start="5">
+<li>生成SSH添加到GitHub：<br> 回到你的git bash中<br> 输入命令：git config –global user.name “yourname”<pre><code>              git config --global user.email &quot;youremail&quot;
+这里的yourname输入你的GitHub用户名，youremail输入你GitHub的邮箱。这样GitHub才能知道你是不是对应它的账户。
+可以用以下两条，检查一下你有没有输对：
+    git config user.name
+    git config user.email
+然后创建SSH,一路回车：ssh-keygen -t rsa -C &quot;youremail&quot;
+而后在GitHub的setting中，找到SSH keys的设置选项，点击New SSH key
+把你的id_rsa.pub里面的信息复制进去。
+在gitbash中，查看是否成功，输入：ssh -T git@github.com</code></pre></li>
+<li>将hexo部署到GitHub：<pre><code>这一步，我们就可以将hexo和GitHub关联起来，也就是将hexo生成的文章部署到GitHub上，打开站点配置文件 _config.yml，翻到最后，修改为
+YourgithubName就是你的GitHub账户
+deploy:
+  type: git
+  repo: https://github.com/YourgithubName/YourgithubName.github.io.git
+  branch: master
+这个时候需要先安装deploy-git ，也就是部署的命令,这样你才能用命令部署到GitHub。
+npm install hexo-deployer-git --save
+然后
+hexo clean
+hexo generate
+hexo deploy
+其中 hexo clean清除了你之前生成的东西，也可以不加。</code></pre>hexo generate 顾名思义，生成静态文章，可以用 hexo g缩写<br>hexo deploy 部署文章，            可以用hexo d缩写<br>注意deploy时可能要你输入username和password。过一会儿就可以在<a href="http://yourname.github.io" target="_blank" rel="noopener">http://yourname.github.io</a> 这个网站看到你的博客了！</li>
+<li>设置个人域名：<pre><code>登录GitHub，进入之前创建的仓库，点击settings，设置Custom domain，输入你的域名fangzh.top
+然后在你的博客文件source中创建一个名为CNAME文件，不要后缀。写上你的域名。
+最后，在gitbash中，输入
+hexo clean
+hexo g
+hexo d
+过不了多久，再打开你的浏览器，输入你自己的域名，就可以看到搭建的网站啦！
+接下来你就可以正式开始写文章了。
+输入命令：hexo new newpapername
+然后在source/_post中打开markdown文件，就可以开始编辑了。当你写完的时候，再
+hexo clean
+hexo g
+hexo d
+就可以看到更新了。</code></pre></li>
+</ol>
+
+  </article>
+  <div class="random-toc-area">
+  <button class="btn-hide-toc btn-hide-toc-show" style="display: none" onclick="TOCToggle()">显示目录</button>
+  <button class="btn-hide-toc btn-hide-toc-hide" onclick="TOCToggle()">隐藏目录</button>
+  <div class="random-toc">
+    <h2>目录</h2>
+    
+  </div>
+</div>
+
+  
+<nav id="pagination">
+  
+
+  
+
+  
+    <a href="/2019/11/03/jsp知识点/" class="next">下一篇 jsp知识点 &rarr;</a>
+  
+</nav>
+
+  <!-- JiaThis Button BEGIN -->
+
+<!-- JiaThis Button END -->
+
+
+      
+      
+    </div>
+  </div>
+
+  <div id="bottom-outer">
+    <div id="bottom-inner">
+      Site by Dr.su using
+      <a href="http://hexo.io">Hexo</a> & <a href="https://github.com/stiekel/hexo-theme-random">Random</a>
+      <br>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+<div id="user-card">
+  <div class="center-field">
+    <img class="avatar" src="https://avatars3.githubusercontent.com/u/13285397?s=460&v=4">
+    <p id="description"></p>
+    <ul class="social-icon">
+  
+  
+    <li>
+      <a href="https://github.com/Baileyswu">
+        
+          <i class="icon iconfont github">&#xe606;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="http://weibo.com/Danliwoo">
+        
+          <i class="icon iconfont weibo">&#xe602;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="mailto:wulidan0530@live.com">
+        
+          M
+        
+      </a>
+    </li>
+  
+</ul>
+  </div>
+</div>
+
+
+<div id="btn-view">Hide</div>
+
+<script>
+// is trigger analytics / tongji script
+var isIgnoreHost = false;
+
+if(window && window.location && window.location.host) {
+  isIgnoreHost = ["localhost","127.0.0.1"].some(function(address){
+    return 0 === window.location.host.indexOf(address);
+  });
+}
+
+var isTriggerAnalytics = !( true && isIgnoreHost );
+
+</script>
+
+
+
+
+  
+  
+    <script src="/js/jquery-2.2.3.min.js"></script>
+  
+    <script src="/js/vegas.min.js"></script>
+  
+    <script src="/js/random.js"></script>
+  
+    <script src="/js/highlight.pack.js"></script>
+  
+    <script src="/js/jquery.mousewheel.pack.js"></script>
+  
+    <script src="/js/jquery.fancybox.pack.js"></script>
+  
+    <script src="/js/jquery.fancybox-thumbs.js"></script>
+  
+    <script src="/js/plyr.js"></script>
+  
+
+<script>
+
+  // fancybox
+  var backgroundImages = [];
+  
+  $('#post').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox') || $(this).parent().hasClass('fancybox-thumb')) return;
+      var alt = this.alt || this.title;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'post' + i);
+    });
+  });
+  $(".fancybox").fancybox();
+
+var vegasConfig = {"preload­Image":true,"transition":["flash"],"timer":true,"delay":1500000,"shuffle":true,"count":12};
+var unsplashConfig = {"gravity":"center"};
+// is show background images
+var turnoffBackgroundImage = false;
+
+
+
+
+var backgroundColor = "34495E";
+
+$(".fancybox-thumb").fancybox({
+  prevEffect: 'none',
+  nextEffect: 'none',
+  helpers: {
+    title: {
+      type: 'outside'
+    },
+    thumbs: {
+      width: 50,
+      height: 50
+    }
+  }
+});
+
+// show video with plyr
+$(".video-container iframe").each(function(i){
+  var url = $(this).attr('src');
+  var id = url.split('/').pop();
+  var plyrContainer = document.createElement('div');
+  plyrContainer.className = 'plyr';
+  var plyrElement = document.createElement('div');
+  plyrElement.dataset.videoId = id;
+  switch(true) {
+    case url.search('youtube.com') >= 0:
+      plyrElement.dataset.type = 'youtube';
+      break;
+    case url.search('vimeo.com') >= 0:
+      plyrElement.dataset.type = 'vimeo';
+      break;
+    default:
+      return;
+  };
+  plyrContainer.appendChild(plyrElement);
+  $(this).parent().html(plyrContainer);
+});
+plyr.setup('.plyr', {iconUrl: '/css/sprite.svg'});
+</script>
+</body>
+</html>
+
